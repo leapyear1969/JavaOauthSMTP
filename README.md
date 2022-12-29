@@ -8,6 +8,24 @@ A demo for Java Oauth SMTP.
 String xOauth = "user="+"jason@majun.fun"+"\\x01auth=Bearer "+token+"\\x01\\x01";
 xOauth = URLDecoder.decode(xOauth.replace("\\x","%"), "UTF-8");
 ```
+- 🌠🌠🌠从JavaMail1.5.5开始，内置的JavaMail支持XOAUTH2认证机制，可也不通过Base64编码，直接将access token作为身份验证，参考如下：
+```java
+Properties props = new Properties();
+props.put("mail.transport.protocol", "smtp");
+props.put("mail.smtp.starttls.enable", "true");
+//using ``mail.smtp.auth.mechanisms``
+props.put("mail.smtp.auth.mechanisms", "XOAUTH2");
+props.put("mail.smtp.port", 587);
+```
+发送邮件,直接使用access token验证：
+```java
+Session session = Session.getInstance(props);
+session.setDebug(true);
+SMTPTransport t = new SMTPTransport(session,null);
+t.connect("smtp.partner.outlook.cn",587,"jason@majun.fun",access_token);
+```
+
+
 ## 使用方法：
 1. 下载本项目，找到``resources`` - ``application.properties``，替换红框内的内容：
 ![image](https://user-images.githubusercontent.com/18607988/209895884-a6c226da-5dcb-4196-bbcb-fbd685cefd17.png)
