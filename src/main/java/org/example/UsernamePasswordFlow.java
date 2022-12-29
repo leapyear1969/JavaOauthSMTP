@@ -86,9 +86,7 @@ public class UsernamePasswordFlow {
 
             t.issueCommand("AUTH XOAUTH2 " + encodedString,235);
             System.out.println("**********************t.issueCommand已经执行了**************************");
-            // 4、创建邮件
             Message message = createMimeMessage(session, "jason@majun.fun", "hello will", "this test");
-            // 5、发送邮件
 
             t.sendMessage(message, message.getAllRecipients());
             System.out.println("已经发送邮件了");
